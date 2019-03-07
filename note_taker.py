@@ -1,5 +1,22 @@
+class Note:
+    def __init__(self, title, text, category):
+        self.__title = title
+        self.__text = text
+        self.__category = category
+
+    def get_title(self):
+        return self.__title
+
+    def get_text(self):
+        return self.__text
+
+    def get_category(self):
+        return self.__category
+
+
+
 from tkinter import *
-import Note
+
 
 root = Tk()
 root.title("Lydia's Note Taker")
@@ -7,8 +24,15 @@ root.option_add("*font", "Consolas 20")
 root.geometry("400x800")
 
 
-def save_note():
-    pass
+def save_note(title, body, category="Shopping"):
+    print("Save note")
+    print(title)
+    print(body)
+    print(category)
+
+    new_note = Note(title, body, category)
+    print("thr")
+    print(new_note.get_title())
 
 
 def open_new_note():
@@ -31,7 +55,7 @@ def open_new_note():
     note_label.grid(sticky=W)
 
     note_text = Text(new_note_window)
-    note_text.config(height=10, width=20, textvariable=text_value)
+    note_text.config(height=10, width=20)
     note_text.grid()
 
     button_frame = Frame(new_note_window)
@@ -40,7 +64,10 @@ def open_new_note():
     cancel_button = Button(button_frame, text="Cancel", command=new_note_window.destroy)
     cancel_button.grid(row=0, column=1, sticky=E)
 
-    save_button = Button(button_frame, text="Save", command=save_note())
+    save_button = Button(button_frame,
+                         text="Save",
+                         command=lambda: save_note(title_value.get(), note_text.get(1.0, END)))
+
     save_button.grid(row=0, column=2, sticky=E)
 
 
