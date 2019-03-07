@@ -1,4 +1,5 @@
 from tkinter import *
+import Note
 
 root = Tk()
 root.title("Lydia's Note Taker")
@@ -6,8 +7,15 @@ root.option_add("*font", "Consolas 20")
 root.geometry("400x800")
 
 
+def save_note():
+    pass
+
+
 def open_new_note():
     print("Open new note window")
+    title_value = StringVar()
+    text_value = StringVar()
+
     new_note_window = Toplevel(root)
 
     new_note_title = Label(new_note_window, text="New Note")
@@ -16,24 +24,24 @@ def open_new_note():
     title_label = Label(new_note_window, text="Title:")
     title_label.grid(sticky=W)
 
-    title_entry = Entry(new_note_window)
+    title_entry = Entry(new_note_window, textvariable=title_value)
     title_entry.grid()
 
     note_label = Label(new_note_window, text="Note text:")
     note_label.grid(sticky=W)
 
     note_text = Text(new_note_window)
-    note_text.config(height=10, width=20)
+    note_text.config(height=10, width=20, textvariable=text_value)
     note_text.grid()
 
     button_frame = Frame(new_note_window)
     button_frame.grid()
 
-    cancel_button = Button(button_frame, text="Cancel")
-    cancel_button.grid(row=0,column=1,sticky=E)
+    cancel_button = Button(button_frame, text="Cancel", command=new_note_window.destroy)
+    cancel_button.grid(row=0, column=1, sticky=E)
 
-    save_button = Button(button_frame, text="Save")
-    save_button.grid(row=0,column=2,sticky=E)
+    save_button = Button(button_frame, text="Save", command=save_note())
+    save_button.grid(row=0, column=2, sticky=E)
 
 
 def open_list(list_name):
