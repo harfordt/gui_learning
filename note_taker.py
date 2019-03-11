@@ -23,16 +23,25 @@ root.title("Lydia's Note Taker")
 root.option_add("*font", "Consolas 20")
 root.geometry("400x800")
 
+notes = []
 
-def save_note(title, body, category="Shopping"):
+
+def save_note(window, title, body, category="Shopping"):
     print("Save note")
     print(title)
-    print(body)
+    print(body.strip())
     print(category)
 
-    new_note = Note(title, body, category)
-    print("thr")
-    print(new_note.get_title())
+    new_note = Note(title.title().strip(),
+                    body.title().strip(),
+                    category.title().strip())
+
+    notes.append(new_note)
+    print("Title: {}".format(new_note.get_title()))
+    print("Body: {}".format(new_note.get_text()))
+    print("Category: {}".format(new_note.get_category()))
+    window.destroy()
+
 
 
 def open_new_note():
@@ -66,13 +75,27 @@ def open_new_note():
 
     save_button = Button(button_frame,
                          text="Save",
-                         command=lambda: save_note(title_value.get(), note_text.get(1.0, END)))
+                         command=lambda: save_note(new_note_window,
+                                                   title_value.get(),
+                                                   note_text.get(1.0, END)))
 
     save_button.grid(row=0, column=2, sticky=E)
 
 
 def open_list(list_name):
-    print("Open a list")
+    print("Open {}".format(list_name))
+    list_window = Toplevel(root)
+    list_window.title(list_name)
+
+    for note in notes:
+        title =note.get_title()
+        body = note.get_text()
+        category = note.get_category()
+
+        note_text ="***{}***\n{}\n".format(title,body)
+
+        Label(list_window,text=note_text).grid(sticky=W)
+
 
 
 lbl_title = Label(root, text="Notes")
