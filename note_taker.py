@@ -56,21 +56,21 @@ def save_note(window, title, body, category="Shopping"):
     """
 
     # creates the note object, after cleaning up the input values
-    new_note = Note(title.title().strip(),
-                    body.title().strip(),
-                    category.title().strip())
+    new_note = Note(title.capitalize().strip(),
+                    body.capitalize().strip(),
+                    category.capitalize().strip())
 
     # add the note to the note list
     notes.append(new_note)
-    # print("Title: {}".format(new_note.get_title()))
-    # print("Body: {}".format(new_note.get_text()))
-    # print("Category: {}".format(new_note.get_category()))
+    print("Title: {}".format(new_note.get_title()))
+    print("Body: {}".format(new_note.get_text()))
+    print("Category: {}".format(new_note.get_category()))
 
     # close the window this function was called from
     window.destroy()
 
 
-def open_new_note():
+def open_new_note(category):
     """Creates a window for the user to enter their note in."""
     print("Open new note window")
     title_value = StringVar()
@@ -107,7 +107,8 @@ def open_new_note():
                          text="Save",
                          command=lambda: save_note(new_note_window,
                                                    title_value.get(),
-                                                   note_text.get(1.0, END)))
+                                                   note_text.get(1.0, END),
+                                                   category))
 
     save_button.grid(row=0, column=2, sticky=E)
 
@@ -145,8 +146,6 @@ def open_list(list_category):
 lbl_title = Label(root, text="Notes")
 lbl_title.config(font=("Calibri", "30"), width=18)
 lbl_title.grid(row=0, sticky=N + E + S + W)
-
-
 
 btn_shopping = Button(root, text="Shopping", command=lambda: open_list("Shopping"))
 btn_shopping.config()
