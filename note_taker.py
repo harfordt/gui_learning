@@ -45,7 +45,7 @@ root.geometry("400x800")
 notes = []
 
 
-def save_note(window, title, body, category="Shopping"):
+def save_note(window, title, body, category):
     """Saves a note to the note list then closes the parent window.
 
     Args:
@@ -62,9 +62,9 @@ def save_note(window, title, body, category="Shopping"):
 
     # add the note to the note list
     notes.append(new_note)
-    print("Title: {}".format(new_note.get_title()))
-    print("Body: {}".format(new_note.get_text()))
-    print("Category: {}".format(new_note.get_category()))
+    # print("Title: {}".format(new_note.get_title()))
+    # print("Body: {}".format(new_note.get_text()))
+    # print("Category: {}".format(new_note.get_category()))
 
     # close the window this function was called from
     window.destroy()
@@ -79,7 +79,7 @@ def open_new_note(category):
     new_note_window = Toplevel(root)
 
     # creates and adds labels and text entry areas
-    new_note_title = Label(new_note_window, text="New Note")
+    new_note_title = Label(new_note_window, text="New {} Note".format(category))
     new_note_title.grid()
 
     title_label = Label(new_note_window, text="Title:")
@@ -128,14 +128,13 @@ def open_list(list_category):
 
     # takes each note from the list, formats it and adds it to the window
     for note in notes:
-        title = note.get_title()
-        body = note.get_text()
         category = note.get_category()
-
-        note_text = "***{}***\n{}\n".format(title, body)
 
         # only add notes with the relevant category
         if category == list_category:
+            title = note.get_title()
+            body = note.get_text()
+            note_text = "***{}***\n{}\n".format(title, body)
             Label(list_window, text=note_text).grid(sticky=W)
 
 
